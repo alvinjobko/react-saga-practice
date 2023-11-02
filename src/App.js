@@ -1,10 +1,9 @@
-import { Container, Grid, Header, Segment, Icon } from "semantic-ui-react";
+import { Container, Header } from "semantic-ui-react";
 import "./App.css";
 import MainHeader from "./components/MainHeader";
 import NewEntryForm from "./components/NewEntryForm";
 import DisplayBalace from "./components/DisplayBalace";
 import DisplayBalacnces from "./components/DisplayBalacnces";
-import EntryLine from "./components/EntryLine";
 import { useEffect, useState } from "react";
 import EntryLines from "./components/EntryLines";
 import ModalEdit from "./components/ModalEdit";
@@ -29,6 +28,7 @@ function App() {
       setEntries(newEntries);
       resetEntry();
     }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
   useEffect(() => {
     let totalIncome = 0;
@@ -43,6 +43,7 @@ function App() {
       setExpense(totalExpense);
       let total = totalIncome - totalExpense;
       setTotal(total);
+      return null;
     });
   }, [entries]);
 
@@ -72,7 +73,7 @@ function App() {
   function modifyEntry(id) {
     console.log("edit entry with id", id);
     if (id) {
-      const index = entries.findIndex((entry) => entry.id == id);
+      const index = entries.findIndex((entry) => entry.id === id);
       const entry = entries[index];
       console.log(
         "edit entry with id",

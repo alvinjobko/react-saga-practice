@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
 import EntryForm from "./EntryForm";
 
