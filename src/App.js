@@ -47,6 +47,13 @@ function App() {
     });
   }, [entries]);
 
+  const payload_add = {
+    id: 5,
+    description: "hello from redux",
+    value: 100,
+    isExpense: false,
+  };
+
   function resetEntry() {
     setDescription("");
     setValue("");
