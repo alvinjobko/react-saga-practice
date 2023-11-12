@@ -1,10 +1,15 @@
 import { combineReducers, createStore } from "redux";
 import entriesReducer from "../reducers/entries.reducers";
-export const configureStore = () => {
-  const combinedReducers = combineReducers({
-    entries: entriesReducer,
-  });
-  const store = createStore(combinedReducers);
+import { applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-  return store;
+const configureStore = () => {
+  return createStore(
+    combineReducers({
+      entries: entriesReducer,
+    }),
+    composeWithDevTools()
+  );
 };
+
+export default configureStore;

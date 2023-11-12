@@ -7,17 +7,19 @@ import DisplayBalacnces from "./components/DisplayBalacnces";
 import { useEffect, useState } from "react";
 import EntryLines from "./components/EntryLines";
 import ModalEdit from "./components/ModalEdit";
+import { useSelector } from "react-redux";
 
 function App() {
   const [description, setDescription] = useState("");
   const [value, setValue] = useState(0);
   const [isExpense, setIsExpense] = useState(true);
-  const [entries, setEntries] = useState(initialEntries);
   const [isOpen, setIsOpen] = useState(false);
   const [entryId, setEntryId] = useState();
   const [incoming, setIncomging] = useState(0);
   const [expense, setExpense] = useState(0);
   const [total, setTotal] = useState(0);
+  const entries = useSelector((state) => state.entries);
+
   useEffect(() => {
     if (!isOpen && entryId) {
       const index = entries.findIndex((entry) => entry.id === entryId);
@@ -25,11 +27,12 @@ function App() {
       newEntries[index].description = description;
       newEntries[index].value = value;
       newEntries[index].isExpense = isExpense;
-      setEntries(newEntries);
+      //setEntries(newEntries);
       resetEntry();
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
+
   useEffect(() => {
     let totalIncome = 0;
     let totalExpense = 0;
@@ -43,8 +46,21 @@ function App() {
       setExpense(totalExpense);
       let total = totalIncome - totalExpense;
       setTotal(total);
+      console.log(
+        "total: ",
+        total,
+        " totalIncome: ",
+        totalIncome,
+        " totalExpense: ",
+        totalExpense
+      );
       return null;
     });
+    if (entries.length === 0) {
+      setTotal(0);
+      setIncomging(0);
+      setExpense(0);
+    }
   }, [entries]);
 
   const payload_add = {
@@ -60,12 +76,6 @@ function App() {
     setIsExpense(true);
   }
 
-  function deleteEntry(id) {
-    const result = entries.filter((entry) => entry.id !== id);
-    setEntries(result);
-    console.log(entries);
-    console.log(result);
-  }
   function addEntry() {
     const result = entries.concat({
       id: entries.length + 1,
@@ -74,7 +84,7 @@ function App() {
       isExpense,
     });
     console.log("result", result);
-    setEntries(result);
+    //setEntries(result);
     resetEntry();
   }
   function modifyEntry(id) {
@@ -111,12 +121,7 @@ function App() {
       ></DisplayBalacnces>
 
       <MainHeader title="History" hstyle="h3"></MainHeader>
-      <Header as="h3">History</Header>
-      <EntryLines
-        entries={entries}
-        modifyEntry={modifyEntry}
-        deleteEntry={deleteEntry}
-      ></EntryLines>
+      <EntryLines entries={entries} modifyEntry={modifyEntry}></EntryLines>
 
       <MainHeader title="Add new transaction" hstyle="h3"></MainHeader>
 
@@ -144,29 +149,3 @@ function App() {
 }
 
 export default App;
-var initialEntries = [
-  {
-    id: 1,
-    description: "Work income",
-    value: 1000,
-    isExpense: false,
-  },
-  {
-    id: 2,
-    description: "Water bill",
-    value: 200,
-    isExpense: true,
-  },
-  {
-    id: 3,
-    description: "Rent",
-    value: 200,
-    isExpense: true,
-  },
-  {
-    id: 4,
-    description: "Power bill",
-    value: 200,
-    isExpense: true,
-  },
-];

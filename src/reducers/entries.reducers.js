@@ -1,4 +1,4 @@
-export const reducer = (state = initialEntries, action) => {
+const entriesReducer = (state = initialEntries, action) => {
   let newEntries;
   switch (action.type) {
     case "ADD_ENTRY":
@@ -7,6 +7,7 @@ export const reducer = (state = initialEntries, action) => {
 
     case "REMOVE_ENTRY":
       newEntries = state.filter((entry) => entry.id !== action.payload.id);
+      console.log(newEntries);
       return newEntries;
 
     default:
@@ -14,10 +15,12 @@ export const reducer = (state = initialEntries, action) => {
   }
 };
 
+export default entriesReducer;
+
 var initialEntries = [
   {
     id: 1,
-    description: "Work income",
+    description: "Work income haha",
     value: 1000,
     isExpense: false,
   },
