@@ -6,14 +6,7 @@ function EntryLines(props) {
   return (
     <Container>
       {props.entries.map((entry) => {
-        return (
-          <EntryLine
-            key={entry.id}
-            entry={entry}
-            deleteEntry={props.deleteEntry}
-            modifyEntry={props.modifyEntry}
-          ></EntryLine>
-        );
+        return <EntryLine key={entry.id} entry={entry}></EntryLine>;
       })}
     </Container>
   );

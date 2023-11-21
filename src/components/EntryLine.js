@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Grid, Icon, Segment } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { addEntryRedux, removeEntryRedux } from "../actions/entries.actions";
-
+import { openEditModal } from "../actions/modals.action";
 function EntryLine(props) {
   const dispatch = useDispatch();
   return (
@@ -20,7 +20,7 @@ function EntryLine(props) {
               <Icon
                 name="edit"
                 bordered
-                onClick={() => props.modifyEntry(props.entry.id)}
+                onClick={() => dispatch(openEditModal(props.entry.id))}
               ></Icon>
               <Icon
                 name="trash"
