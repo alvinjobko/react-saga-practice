@@ -14,10 +14,13 @@ function App() {
   const [expense, setExpense] = useState(0);
   const [total, setTotal] = useState(0);
   const entries = useSelector((state) => state.entries);
-  const isOpen = useSelector((state) => state.modals.isOpen);
+  const { isOpen, id } = useSelector((state) => state.modals);
+  const [entry, setEntry] = useState();
   useEffect(() => {
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+    const index = entries.findIndex((entry) => entry.id === id);
+    setEntry(entries[index]);
+  }, [isOpen, id]);
 
   useEffect(() => {
     let totalIncome = 0;
@@ -76,7 +79,7 @@ function App() {
       <MainHeader title="Add new transaction" hstyle="h3"></MainHeader>
 
       <NewEntryForm></NewEntryForm>
-      <ModalEdit isOpen={isOpen} />
+      <ModalEdit isOpen={isOpen} {...entry} />
     </Container>
   );
 }
